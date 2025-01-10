@@ -8,22 +8,27 @@ import SwiftUI
 
 let user = ["name": "Roman", "LastName": "Uriel", "age": 24] as [String: Any]
 
+
+
 var colors = ["Red","Blue","Yellow","Green","Grey","Purple","Orange","Brown","Black","White"]
 
 struct HomeScreen: View {
+    @ObservedObject var viewModel: HomeViewModel = HomeViewModel()
+    	
     var body: some View {
-        List(colors, id: \.self) {color in
-            ListItem(color: color)
+        List(viewModel.users) { user in
+            ListItem(user: user)
         }
     }
 }
 
 struct ListItem : View {
-    let color: String
+    let user: User
+    let action: () -> Void = { print("Hello") }
     var body: some View {
         VStack {
-            Text("I am").font(.headline)
-            Text(color)
+            Text("I am \(user.name)").font(.headline)
+            Text("Email: \(user.email)")
         }
     }
 }
